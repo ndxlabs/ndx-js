@@ -1,0 +1,15 @@
+.cache
+.DS_Store
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+.pnp.js
+/.pnp
+/build
+/coverage
+/node_modules
+npm-debug.log*
+package-lock.json
+yarn-debug.log*
+yarn-error.log*
