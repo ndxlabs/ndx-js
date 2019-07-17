@@ -24,60 +24,91 @@ npm install @ndxlabs/ndx-js
 yarn add @ndxlabs/ndx-js
 ```
 
-## UMD
+## Usage
+
+### Javascript
 
 ```html
 
-  <div id="root"></div>
+<div class="ndx-embed"></div>
 
-  <script crossorigin src="https://unpkg.com/@ndxlabs/ndx-js@2.0.0/dist/ndx.umd.min.js"></script>
-  <script>
+<script src="https://unpkg.com/@ndxlabs/ndx-js"></script>
+<script>
 
-    ndx.configure({
-      apiKey: '__NDX_API_KEY__'
-    });
+  ndx.configure({
+    apiKey: 'ab3rGRg4iwC5Qy...',
+    analytics: true
+  });
 
-    var tech = ndx.Tech('#root', '__NDX_VIDEO_ID__', {
-      list: {
-        orientation: ndx.VERTICAL,
-        style: {
-          position: 'absolute',
-          bottom: '2em',
-          left: '0',
-          padding: '0 2em',
-        }
+  var tech = ndx.Tech('.ndx-embed', '1234567...', {
+    list: {
+      orientation: ndx.HORIZONTAL,
+      view: ndx.LIST,
+      timeBased: true,
+      style: {
+        position: 'absolute',
+        bottom: '2em',
+        left: '0',
+        padding: '0 2em'
+      },
+      onItemSelected: function(content) {
+        // doSomethingWithSelectedContent(content);
       }
-    });
-    
-    tech.list.show();
-    tech.list.updateTime(5);
+    },
+    detail: {
+      relatedContent: true,
+      useTMDb: true,
+      onClose: function() {
+        // doSomethingAfterClose();
+      }
+    }
+  });
 
-  </script>
+  tech.list.show().updateTime(5);
+
+</script>
 
 ```
 
-## React
+### React
 
-```jsx
+```JSX
+
 import React from 'react';
 import { NDX, NDXTech } from '@ndxlabs/ndx-js';
+import { withRouter } from 'react-router';
 
-import WatchPage from './containers/WatchPage';
-import Player from './components/Player';
-import Controls from './components/Controls';
+import Controls from '../../components/Controls';
+import Player from '../../components/Player';
+import Provider from '../../context/Provider';
 
-function App(props) {
+function Watch({ match, store }) {
+  const { videoId } = match.params;
+  const { playing, currentTime } = store.getState();
+
   return (
     <Provider>
-      <NDX apiKey={'__NDX_API_KEY__'} config={{}} />
-      <YourWatchPage { ...props }>
-        <Player>
-          <NDXTech videoId={'__NDX_VIDEO_ID__'} />
-          <Controls />
-        </Player>
-      </YouWatchPage
+      <NDX apiKey={process.env.REACT_APP_NDX_API_KEY} config={{ analytics: true }} />
+      <Player>
+        <NDXTech videoId={videoId} config={{
+          list: {
+            orientation: ndx.VERTICAL,
+            showing: !playing,
+            currentTime,
+            style: {
+              position: 'absolute',
+              top: '2em',
+              left: '2em',
+            },
+          }
+        }} />
+        <Controls />
+      </Player>
     </Provider>
-  )
+  );
 }
+
+export default withRouter(Watch);
+
 ```
 
