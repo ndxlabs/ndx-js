@@ -4,10 +4,10 @@
 </p>  
 <br/>
 <p align="center">
-  <img alt="NPM Version" src="https://img.shields.io/npm/v/@ndxlabs/ndx-js.svg" />
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ndxlabs/ndx-js.svg" />
-  <img alt="GitHub License" src="https://img.shields.io/github/license/ndxlabs/ndx-js.svg" />
-  <img alt="Dependencies" src="https://img.shields.io/david/peer/ndxlabs/ndx-js.svg" />
+  <img alt="NPM Version" src="https://img.shields.io/npm/v/@ndxlabs/ndx-js.svg?style=for-the-badge" />
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ndxlabs/ndx-js.svg?style=for-the-badge" />
+  <img alt="GitHub License" src="https://img.shields.io/github/license/ndxlabs/ndx-js.svg?style=for-the-badge" />
+  <img alt="Dependencies" src="https://img.shields.io/david/peer/ndxlabs/ndx-js.svg?style=for-the-badge" />
 </p>
 <br/>
 
@@ -47,8 +47,8 @@ yarn add @ndxlabs/ndx-js
       timeBased: true,
       style: {
         position: 'absolute',
-        bottom: '2em',
-        left: '0',
+        bottom: '5em',
+        left: 0,
         padding: '0 2em'
       },
       onItemSelected: function(content) {
@@ -72,43 +72,45 @@ yarn add @ndxlabs/ndx-js
 
 ### React
 
-```JSX
+```jsx
 
 import React from 'react';
-import { NDX, NDXTech } from '@ndxlabs/ndx-js';
 import { withRouter } from 'react-router';
+import { NDX, ndx } from '@ndxlabs/ndx-js';
 
 import Controls from '../../components/Controls';
 import Player from '../../components/Player';
-import Provider from '../../context/Provider';
 
-function Watch({ match, store }) {
+
+const Watch = withRouter(({ match, store }) => {
   const { videoId } = match.params;
   const { playing, currentTime } = store.getState();
 
   return (
-    <Provider>
+    <div className="watch-page">
       <NDX apiKey={process.env.REACT_APP_NDX_API_KEY} config={{ analytics: true }} />
       <Player>
-        <NDXTech videoId={videoId} config={{
-          list: {
-            orientation: ndx.VERTICAL,
-            showing: !playing,
-            currentTime,
-            style: {
-              position: 'absolute',
-              top: '2em',
-              left: '2em',
-            },
-          }
-        }} />
         <Controls />
+        <NDX.Tech 
+          videoId={videoId} 
+          showing={!playing}
+          currentTime={currentTime}
+          orientation={ndx.VERTICAL}
+          size={ndx.SMALL}
+          config={{
+            list: {
+              style: {
+                position: 'absolute',
+                top: '1em',
+                left: '1em',
+                padding: '1em',
+              },
+            }
+          }} />
       </Player>
-    </Provider>
+    </div>
   );
-}
-
-export default withRouter(Watch);
+});
 
 ```
 
