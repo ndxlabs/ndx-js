@@ -37,28 +37,36 @@ yarn add @ndxlabs/ndx-js
 
   ndx.configure({
     apiKey: 'ab3rGRg4iwC5Qy...',
-    analytics: true
+    analytics: true,
+    onReady() {},
   });
 
-  var tech = ndx.Tech('.ndx-embed', '1234567...', {
+  const tech = ndx.Tech('.ndx-embed', '1234567...', {
     list: {
       orientation: ndx.HORIZONTAL,
+      size: ndx.SMALL,
       view: ndx.LIST,
       timeBased: true,
       style: {
         position: 'absolute',
-        bottom: '5em',
-        left: 0,
+        bottom: '2em',
+        left: '0',
         padding: '0 2em'
       },
-      onItemSelected: function(content) {
+      onItemSelected(content) {
         // doSomethingWithSelectedContent(content);
       }
     },
     detail: {
       relatedContent: true,
       useTMDb: true,
-      onClose: function() {
+      onOpen(content) {
+        // Optionally inject recommended content
+        tech.detail.injectRelatedContent(
+          lookUpRecommendedContent(content.item.title);
+        );
+      },
+      onClose() {
         // doSomethingAfterClose();
       }
     }
@@ -81,31 +89,31 @@ import { NDX, ndx } from '@ndxlabs/ndx-js';
 import Controls from '../../components/Controls';
 import Player from '../../components/Player';
 
-
 const Watch = withRouter(({ match, store }) => {
   const { videoId } = match.params;
-  const { playing, currentTime } = store.getState();
+  const { playing, currentTime } = store.getState().player;
+
+  const _onItemSelected = (content) => {
+    // deepLinkToContent(content.id);
+  };
 
   return (
     <div className="watch-page">
-      <NDX apiKey={process.env.REACT_APP_NDX_API_KEY} config={{ analytics: true }} />
+      <NDX apiKey={process.env.REACT_APP_NDX_API_KEY} analytics={true} />
       <Player>
         <Controls />
         <NDX.Tech 
           videoId={videoId} 
-          showing={!playing}
+          show={!playing}
           currentTime={currentTime}
-          orientation={ndx.VERTICAL}
-          size={ndx.SMALL}
-          config={{
-            list: {
-              style: {
-                position: 'absolute',
-                top: '1em',
-                left: '1em',
-                padding: '1em',
-              },
-            }
+          onItemSelected={_onItemSelected}
+          list={{
+            orientation: ndx.VERTICAL,
+            style: {
+              position: 'absolute',
+              top: '2em',
+              left: '2em',
+            },
           }} />
       </Player>
     </div>
