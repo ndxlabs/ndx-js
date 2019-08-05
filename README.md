@@ -36,39 +36,21 @@ yarn add @ndxlabs/ndx-js
 <script>
 
   ndx.configure({
-    apiKey: 'ab3rGRg4iwC5Qy...',
-    analytics: true,
-    onReady() {},
+    apiKey: 'ab3rGRg4iwC5Qy...'
   });
 
   const tech = ndx.Tech('.ndx-embed', '1234567...', {
     list: {
       orientation: ndx.HORIZONTAL,
-      size: ndx.SMALL,
       view: ndx.LIST,
-      timeBased: true,
       style: {
         position: 'absolute',
         bottom: '2em',
-        left: '0',
-        padding: '0 2em'
-      },
-      onItemSelected(content) {
-        // doSomethingWithSelectedContent(content);
+        left: '0'
       }
     },
     detail: {
-      relatedContent: true,
-      useTMDb: true,
-      onOpen(content) {
-        // Optionally inject recommended content
-        tech.detail.injectRelatedContent(
-          lookUpRecommendedContent(content.item.title);
-        );
-      },
-      onClose() {
-        // doSomethingAfterClose();
-      }
+      relatedContent: true
     }
   });
 
@@ -93,27 +75,22 @@ const Watch = withRouter(({ match, store }) => {
   const { videoId } = match.params;
   const { playing, currentTime } = store.getState().player;
 
-  const _onItemSelected = (content) => {
-    // deepLinkToContent(content.id);
-  };
-
   return (
     <div className="watch-page">
-      <NDX apiKey={process.env.REACT_APP_NDX_API_KEY} analytics={true} />
+      <NDX apiKey={process.env.REACT_APP_NDX_API_KEY} />
       <Player>
         <Controls />
         <NDX.Tech 
           videoId={videoId} 
           show={!playing}
           currentTime={currentTime}
-          onItemSelected={_onItemSelected}
           list={{
-            orientation: ndx.VERTICAL,
+            orientation={ndx.HORIZONTAL}
             style: {
               position: 'absolute',
-              top: '2em',
-              left: '2em',
-            },
+              bottom: '2em',
+              left: '0'
+            }
           }} />
       </Player>
     </div>
