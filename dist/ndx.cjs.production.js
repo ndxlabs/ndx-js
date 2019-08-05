@@ -1,5 +1,5 @@
 /**
- * @license ndx-js v2.1.2 <https://ndx.video>
+ * @license ndx-js v2.1.3 <https://ndx.video>
  * 
  * Copyright (c) 2019 Contextual Labs, Inc.
  * 
