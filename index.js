@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./dist/ndx.cjs.production.js');
+module.exports = require('./dist/ndx.esm.production.js');

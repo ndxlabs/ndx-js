@@ -8,7 +8,7 @@
     "url": "https://github.com/ndxlabs/ndx-js.git",
     "type": "git"
   },
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/ndxlabs/ndx-js/issues"
   },
@@ -36,8 +36,7 @@
     "js-base64": "^2.5.1",
     "nanoid": "^2.0.1",
     "prop-types": "^15.7.2",
-    "react-easy-state": "^6.1.3",
-    "react-feather": "^1.1.6"
+    "react-easy-state": "^6.1.3"
   },
   "browserslist": [
     ">0.2%",
