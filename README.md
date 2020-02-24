@@ -37,7 +37,7 @@ npm install @ndxlabs/ndx-js
 
   const tech = ndx.Tech('.ndx-embed', '1234567...', {
     list: {
-      orientation: Tech.HORIZONTAL,
+      orientation: ndx.HORIZONTAL,
       style: {
         position: 'absolute',
         bottom: '2em',
